@@ -11,7 +11,6 @@ import {colors} from '../styles/colors';
 
 const Tab = createBottomTabNavigator();
 
-// Definição das constantes para os ícones
 const AddAlertIcon = ({color, size}: {color: string; size: number}) => (
   <MaterialIcons name="add-alert" color={color} size={size} />
 );
@@ -25,7 +24,6 @@ const GraphIcon = ({color, size}: {color: string; size: number}) => (
 );
 
 const navigatorOptions = {
-  headerShown: false,
   tabBarShowLabel: false,
   tabBarStyle: {
     backgroundColor: colors.primary,
@@ -33,6 +31,19 @@ const navigatorOptions = {
   tabBarActiveTintColor: colors.blue,
   tabBarInactiveTintColor: colors.quaternal,
 };
+
+const tabTitleOptions = (title: string) => ({
+  headerShown: true,
+  headerStyle: {
+    backgroundColor: colors.primary,
+  },
+  headerTintColor: colors.white,
+  headerTitleStyle: {
+    fontWeight: 'bold',
+    fontSize: 24,
+  },
+  headerTitle: title,
+});
 
 const AppNavigator: React.FC = () => {
   return (
@@ -42,6 +53,7 @@ const AppNavigator: React.FC = () => {
           name="Add Alert"
           component={AddAlertScreen}
           options={{
+            ...tabTitleOptions('Add Alert'),
             tabBarIcon: ({color, size}) => (
               <AddAlertIcon color={color} size={size} />
             ),
@@ -51,15 +63,17 @@ const AppNavigator: React.FC = () => {
           name="Watchlist"
           component={WatchlistScreen}
           options={{
+            ...tabTitleOptions('Watchlist'),
             tabBarIcon: ({color, size}) => (
               <WatchlistIcon color={color} size={size} />
             ),
           }}
         />
         <Tab.Screen
-          name="Graph"
+          name="Stock Graphs"
           component={GraphScreen}
           options={{
+            ...tabTitleOptions('Stock Graphs'),
             tabBarIcon: ({color, size}) => (
               <GraphIcon color={color} size={size} />
             ),
