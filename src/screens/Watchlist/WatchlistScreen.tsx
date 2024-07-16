@@ -5,14 +5,14 @@ import StockCard from '../../components/StockCard/StockCard';
 import {styles} from './styles';
 import createSocket from '../../services/socket';
 import _ from 'lodash';
-import {API_TOKEN} from '../../services/Api';
+import {URL_API_TOKEN} from '@env';
 
 const WatchlistScreen: React.FC = () => {
   const {watchedStocks, loadMoreStocks, updateStockPrice} = useStockContext();
 
   const openSocketConnection = () => {
     const symbols = watchedStocks.map(stock => stock.symbol);
-    const token = API_TOKEN;
+    const token = URL_API_TOKEN;
 
     const handleSocketMessage = _.throttle(
       (data: {s: string; p: number}[]) => {

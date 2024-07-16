@@ -1,5 +1,6 @@
+import {URL_API_TOKEN} from '@env';
 import {Stock, StockSymbol} from '../types/StockTypes';
-import api, {API_TOKEN} from './Api';
+import api from './Api';
 
 const exchange = 'US';
 
@@ -25,7 +26,7 @@ const getStocks = async (
     const response = await api.get('/stock/symbol', {
       params: {
         exchange: exchange,
-        token: API_TOKEN,
+        token: URL_API_TOKEN,
       },
     });
 

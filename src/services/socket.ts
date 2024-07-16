@@ -13,7 +13,7 @@ const createSocket = (
   const socket = new WebSocket(`wss://ws.finnhub.io?token=${token}`);
   let isOpen = false;
   let lastProcessedTime = 0;
-  const throttleInterval = 1000; // 1 second
+  const throttleInterval = 1000;
 
   socket.onopen = () => {
     console.log('WebSocket connection opened.');

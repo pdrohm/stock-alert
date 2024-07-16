@@ -1,3 +1,4 @@
+// src/navigation/AppNavigator.tsx
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {NavigationContainer} from '@react-navigation/native';
@@ -32,19 +33,6 @@ const navigatorOptions = {
   tabBarInactiveTintColor: colors.quaternal,
 };
 
-const tabTitleOptions = (title: string) => ({
-  headerShown: true,
-  headerStyle: {
-    backgroundColor: colors.primary,
-  },
-  headerTintColor: colors.white,
-  headerTitleStyle: {
-    fontWeight: 'bold',
-    fontSize: 24,
-  },
-  headerTitle: title,
-});
-
 const AppNavigator: React.FC = () => {
   return (
     <NavigationContainer>
@@ -53,7 +41,11 @@ const AppNavigator: React.FC = () => {
           name="Add Alert"
           component={AddAlertScreen}
           options={{
-            ...tabTitleOptions('Add Alert'),
+            headerShown: true,
+            headerStyle: {backgroundColor: colors.primary},
+            headerTintColor: colors.white,
+            headerTitleStyle: {fontWeight: 'bold'},
+            headerTitle: 'Add Alert',
             tabBarIcon: ({color, size}) => (
               <AddAlertIcon color={color} size={size} />
             ),
@@ -63,7 +55,11 @@ const AppNavigator: React.FC = () => {
           name="Watchlist"
           component={WatchlistScreen}
           options={{
-            ...tabTitleOptions('Watchlist'),
+            headerShown: true,
+            headerStyle: {backgroundColor: colors.primary},
+            headerTintColor: colors.white,
+            headerTitleStyle: {fontWeight: 'bold'},
+            headerTitle: 'Watchlist',
             tabBarIcon: ({color, size}) => (
               <WatchlistIcon color={color} size={size} />
             ),
@@ -73,7 +69,11 @@ const AppNavigator: React.FC = () => {
           name="Stock Graphs"
           component={GraphScreen}
           options={{
-            ...tabTitleOptions('Stock Graphs'),
+            headerShown: true,
+            headerStyle: {backgroundColor: colors.primary},
+            headerTintColor: colors.white,
+            headerTitleStyle: {fontWeight: 'bold'},
+            headerTitle: 'Stock Graphs',
             tabBarIcon: ({color, size}) => (
               <GraphIcon color={color} size={size} />
             ),

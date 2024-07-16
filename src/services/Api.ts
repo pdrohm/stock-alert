@@ -1,13 +1,11 @@
 // src/services/Api.ts
+import {URL_API, URL_API_TOKEN} from '@env';
 import axios from 'axios';
 
-export const API_TOKEN = 'cqb3de9r01qmfd85mesgcqb3de9r01qmfd85met0';
-const BASE_URL = 'https://finnhub.io/api/v1';
-
 const api = axios.create({
-  baseURL: BASE_URL,
+  baseURL: URL_API,
   params: {
-    token: API_TOKEN,
+    token: URL_API_TOKEN,
   },
 });
 
