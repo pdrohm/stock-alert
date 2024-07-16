@@ -1,4 +1,12 @@
-import React, {createContext, useContext, useState, ReactNode} from 'react';
+import React, {
+  createContext,
+  useContext,
+  useState,
+  ReactNode,
+  useEffect,
+} from 'react';
+import {showNotification} from '../config/PushNotificationConfig';
+import StockService from '../services/StockService';
 
 interface Alert {
   symbol: string;
@@ -18,6 +26,24 @@ export const AlertProvider = ({children}: {children: ReactNode}) => {
   const addAlert = (symbol: string, price: number) => {
     setAlerts([...alerts, {symbol, price}]);
   };
+
+  useEffect(() => {
+    const checkPrices = async () => {
+      for (const alert of alerts) {
+        const stockPrice = await StockService.getStockPrice(alert.symbol);
+        if (stockPrice > alert.price) {
+          showNotification(
+            'Price Alert',
+            `The price of ${alert.symbol} has exceeded ${alert.price}`,
+          );
+        }
+      }
+    };
+
+    const interval = setInterval(checkPrices, 60000);
+
+    return () => clearInterval(interval);
+  }, [alerts]);
 
   return (
     <AlertContext.Provider value={{alerts, addAlert}}>

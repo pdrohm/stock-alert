@@ -1,4 +1,3 @@
-// src/components/ProfileBanner.tsx
 import React from 'react';
 import {View, Text, Image, TouchableOpacity} from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';

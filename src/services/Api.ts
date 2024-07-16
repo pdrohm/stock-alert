@@ -1,4 +1,3 @@
-// src/services/Api.ts
 import {URL_API, URL_API_TOKEN} from '@env';
 import axios from 'axios';
 

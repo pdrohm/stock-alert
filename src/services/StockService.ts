@@ -8,12 +8,22 @@ const getStockData = async (symbol: string): Promise<Stock> => {
   try {
     console.log('symbol', symbol);
     const response = await api.get('/quote', {
-      params: {symbol},
+      params: {symbol, token: URL_API_TOKEN},
     });
 
     return response.data;
   } catch (error) {
     console.error('Error fetching stock data:', error);
+    throw error;
+  }
+};
+
+const getStockPrice = async (symbol: string): Promise<number> => {
+  try {
+    const stockData = await getStockData(symbol);
+    return stockData.c;
+  } catch (error) {
+    console.error('Error fetching stock price:', error);
     throw error;
   }
 };
@@ -30,7 +40,6 @@ const getStocks = async (
       },
     });
 
-    // Filtrar apenas os campos necessários e limitar a quantidade de dados
     const stockList = response.data
       .slice((page - 1) * limit, page * limit)
       .map((stock: any) => ({
@@ -53,17 +62,18 @@ const addPriceAlert = async (symbol: string, price: number): Promise<void> => {
 const searchStock = async (query: string) => {
   try {
     const response = await api.get('/search', {
-      params: {q: query},
+      params: {q: query, token: URL_API_TOKEN},
     });
     return response.data.result;
   } catch (error) {
-    console.error('Error fetching symbols:', error);
+    console.error('Error searching stock:', error);
     return [];
   }
 };
 
 export default {
   getStockData,
+  getStockPrice,
   getStocks,
   addPriceAlert,
   searchStock,

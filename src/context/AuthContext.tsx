@@ -1,4 +1,3 @@
-// src/context/AuthContext.tsx
 import React, {
   createContext,
   useState,
@@ -22,8 +21,6 @@ const AuthContext = createContext<AuthContextData | undefined>(undefined);
 export const AuthProvider: React.FC<{children: ReactNode}> = ({children}) => {
   const {authorize, clearSession, user} = useAuth0();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-  console.log('user', user);
 
   useEffect(() => {
     if (user) {

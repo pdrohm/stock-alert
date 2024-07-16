@@ -1,4 +1,3 @@
-// src/components/LoginButton.tsx
 import React from 'react';
 import {Button} from 'react-native';
 import {useAuth0} from 'react-native-auth0';
