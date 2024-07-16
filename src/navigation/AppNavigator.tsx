@@ -7,6 +7,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import AddAlertScreen from '../screens/AddAlert/AddAlertScreen';
 import WatchlistScreen from '../screens/Watchlist/WatchlistScreen';
 import GraphScreen from '../screens/Graph/GraphScreen';
+import {colors} from '../styles/colors';
 
 const Tab = createBottomTabNavigator();
 
@@ -23,14 +24,20 @@ const GraphIcon = ({color, size}: {color: string; size: number}) => (
   <MaterialCommunityIcons name="chart-line" color={color} size={size} />
 );
 
+const navigatorOptions = {
+  headerShown: false,
+  tabBarShowLabel: false,
+  tabBarStyle: {
+    backgroundColor: colors.primary,
+  },
+  tabBarActiveTintColor: colors.blue,
+  tabBarInactiveTintColor: colors.quaternal,
+};
+
 const AppNavigator: React.FC = () => {
   return (
     <NavigationContainer>
-      <Tab.Navigator
-        screenOptions={{
-          headerShown: false,
-          tabBarShowLabel: false,
-        }}>
+      <Tab.Navigator screenOptions={navigatorOptions}>
         <Tab.Screen
           name="Add Alert"
           component={AddAlertScreen}
