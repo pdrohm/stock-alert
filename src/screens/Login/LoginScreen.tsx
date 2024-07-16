@@ -1,25 +1,21 @@
 // src/screens/LoginScreen.tsx
 import React from 'react';
-import {View, StyleSheet, Button} from 'react-native';
+import {View, TouchableOpacity, Text} from 'react-native';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {useAuth} from '../../context/AuthContext';
+import {styles} from './styles';
 
 const LoginScreen: React.FC = () => {
   const {login} = useAuth();
 
   return (
     <View style={styles.container}>
-      <Button title="Log in" onPress={login} />
+      <TouchableOpacity style={styles.loginButton} onPress={login}>
+        <MaterialIcons name="login" size={24} color="#fff" />
+        <Text style={styles.loginButtonText}>Log in</Text>
+      </TouchableOpacity>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 16,
-  },
-});
 
 export default LoginScreen;
