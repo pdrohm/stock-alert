@@ -54,9 +54,7 @@ const createSocket = (
     }
   };
 
-  socket.onerror = error => {
-    console.error('WebSocket error:', error);
-  };
+  socket.onerror = () => {};
 
   socket.onclose = () => {
     isOpen = false;

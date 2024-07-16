@@ -6,7 +6,6 @@ const exchange = 'US';
 
 const getStockData = async (symbol: string): Promise<Stock> => {
   try {
-    console.log('symbol', symbol);
     const response = await api.get('/quote', {
       params: {symbol, token: URL_API_TOKEN},
     });
