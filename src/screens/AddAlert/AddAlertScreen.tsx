@@ -4,13 +4,14 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import {useStockContext} from '../../context/StockContext';
 import {useAlertContext} from '../../context/AlertContext';
 import {styles} from './styles';
-import StockService from '../../services/StockService';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Badge from '../../components/Badge/Badge';
 import SubmitButton from '../../components/SubmitButton/SubmitButton';
+import StockService from '../../services/StockService';
 
 const AddAlertScreen = () => {
-  const {stocks, addWatchedStock, setStocks} = useStockContext();
+  const {stocks, addWatchedStock, setStocks, loadMoreStocks} =
+    useStockContext();
   const {addAlert, alerts} = useAlertContext();
   const [selectedStocks, setSelectedStocks] = useState<string[]>([]);
   const [priceAlert, setPriceAlert] = useState<string>('');
@@ -112,6 +113,8 @@ const AddAlertScreen = () => {
         listMode="FLATLIST"
         flatListProps={{
           initialNumToRender: 10,
+          onEndReached: loadMoreStocks,
+          onEndReachedThreshold: 0.5,
         }}
         showBadgeDot={true}
         mode="BADGE"
