@@ -1,80 +1,85 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# Stock Alert App
 
-# Getting Started
+The Stock Alert App is a React Native application designed to help users monitor and manage their stock investments. Users can add stocks to their watchlist, set price alerts, and receive real-time updates on stock prices.
 
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+## Features
 
-## Step 1: Start the Metro Server
+- **Watchlist Management**: Add, edit, and remove stocks from your watchlist.
+- **Price Alerts**: Set custom price alerts for stocks and get notified when the price crosses your set threshold.
+- **Real-Time Data**: Fetch and display real-time stock data.
+- **Search Functionality**: Search for stocks and dynamically update the watchlist based on search results.
 
-First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
+## Prerequisites
 
-To start Metro, run the following command from the _root_ of your React Native project:
+Before running the application, ensure you have the following installed:
 
-```bash
-# using npm
-npm start
+- [Node.js](https://nodejs.org/)
+- [npm](https://www.npmjs.com/)
+- [React Native CLI](https://reactnative.dev/docs/environment-setup)
+- [Xcode](https://developer.apple.com/xcode/) (for iOS development)
+- [Android Studio](https://developer.android.com/studio) (for Android development)
 
-# OR using Yarn
-yarn start
-```
+## Installation
 
-## Step 2: Start your Application
+1. Clone the repository:
 
-Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
+    ```bash
+    git clone https://github.com/yourusername/stock-alert-app.git
+    cd stock-alert-app
+    ```
 
-### For Android
+2. Install the dependencies:
 
-```bash
-# using npm
-npm run android
+    ```bash
+    npm install
+    ```
 
-# OR using Yarn
-yarn android
-```
+3. Create a `.env` file in the root directory (check the .env.example):
 
-### For iOS
+    ```env
+    URL_API_TOKEN=your_api_token
+    URL_AUTH0_DOMAIN=your_auth0_domain
+    URL_AUTH0_CLIENT_ID=your_auth0_client_id
+    URL_AUTH0_REDIRECT_URI=your_redirect_uri
+    URL_AUTH0_LOGOUT_REDIRECT_URI=your_logout_redirect_uri
+    ```
 
-```bash
-# using npm
-npm run ios
+## Running the Application
 
-# OR using Yarn
-yarn ios
-```
+### iOS
 
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
+1. Install CocoaPods dependencies:
 
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
+    ```bash
+    cd ios
+    pod install
+    cd ..
+    ```
 
-## Step 3: Modifying your App
+2. Run the application:
 
-Now that you have successfully run the app, let's modify it.
+    ```bash
+    npx react-native run-ios
+    ```
 
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
+### Android
 
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
+1. Start the Android emulator from Android Studio or connect an Android device.
 
-## Congratulations! :tada:
+2. Run the application:
 
-You've successfully run and modified your React Native App. :partying_face:
+    ```bash
+    npx react-native run-android
+    ```
 
-### Now what?
+## Usage
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
+1. **Login**: Use the Auth0 login button to authenticate.
+2. **Add Stocks**: Search and add stocks to your watchlist.
+3. **Set Alerts**: Set price alerts for the stocks in your watchlist.
+4. **Receive Notifications**: Get notified when the stock price crosses your set threshold.
+5. **Logout**: Use the logout button to end your session.
 
-# Troubleshooting
+## License
 
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
-# stock-alert
+This project is licensed under the MIT License.
