@@ -8,9 +8,10 @@ import React, {
 } from 'react';
 import {useAuth0} from 'react-native-auth0';
 import {URL_AUTH0_REDIRECT_URI} from '@env';
+import {User} from '../types/UserTypes';
 
 interface AuthContextData {
-  user: object | null;
+  user: User | null;
   login: () => void;
   logout: () => void;
   isAuthenticated: boolean;

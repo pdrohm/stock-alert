@@ -8,6 +8,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import Badge from '../../components/Badge/Badge';
 import SubmitButton from '../../components/SubmitButton/SubmitButton';
 import StockService from '../../services/StockService';
+import ProfileBanner from '../../components/ProfileBanner/ProfileBanner';
 
 const AddAlertScreen = () => {
   const {stocks, addWatchedStock, setStocks, loadMoreStocks} =
@@ -88,6 +89,7 @@ const AddAlertScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <ProfileBanner />
       <Text style={styles.label}>Search Stock:</Text>
       <DropDownPicker
         open={open}
