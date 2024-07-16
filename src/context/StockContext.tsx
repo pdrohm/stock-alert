@@ -13,6 +13,7 @@ interface StockContextData {
   watchedStocks: Stock[];
   addWatchedStock: (symbol: string) => void;
   removeWatchedStock: (symbol: string) => void;
+  loadMoreStocks: () => void;
   updateStockPrice: (symbol: string, price: number) => void;
   setStocks: (stocks: StockSymbol[]) => void;
   fetchStocks: () => void;
@@ -27,6 +28,7 @@ const StockContext = createContext<StockContextData | undefined>(undefined);
 export const StockProvider: React.FC<StockProviderProps> = ({children}) => {
   const [stocks, setStocksState] = useState<StockSymbol[]>([]);
   const [watchedStocks, setWatchedStocks] = useState<Stock[]>([]);
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
     fetchStocks();
@@ -34,7 +36,7 @@ export const StockProvider: React.FC<StockProviderProps> = ({children}) => {
 
   const fetchStocks = async () => {
     try {
-      const stockList = await StockService.getStocks();
+      const stockList = await StockService.getStocks(page);
       setStocksState(prevStocks => [...prevStocks, ...stockList]);
     } catch (error) {
       console.error('Error fetching stocks:', error);
@@ -67,6 +69,10 @@ export const StockProvider: React.FC<StockProviderProps> = ({children}) => {
     );
   };
 
+  const loadMoreStocks = () => {
+    setPage(prevPage => prevPage + 1);
+  };
+
   const updateStockPrice = (symbol: string, price: number) => {
     setWatchedStocks(prevStocks =>
       prevStocks.map(stock =>
@@ -86,7 +92,7 @@ export const StockProvider: React.FC<StockProviderProps> = ({children}) => {
         watchedStocks,
         addWatchedStock,
         removeWatchedStock,
-
+        loadMoreStocks,
         updateStockPrice,
         setStocks,
         fetchStocks,

@@ -17,11 +17,10 @@ const getStockData = async (symbol: string): Promise<Stock> => {
   }
 };
 
-const getStocks = async (): Promise<StockSymbol[]> => {
+const getStocks = async (page: number): Promise<StockSymbol[]> => {
   try {
-    console.log('API_TOKEN', API_TOKEN);
     const response = await api.get('/stock/symbol', {
-      params: {exchange, limit: 20, token: API_TOKEN},
+      params: {exchange, limit: 20, offset: (page - 1) * 20, token: API_TOKEN},
     });
     const stockList = response.data.map((stock: any) => ({
       displaySymbol: stock.displaySymbol,
