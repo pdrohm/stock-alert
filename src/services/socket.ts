@@ -15,19 +15,32 @@ const createSocket = (
   let lastProcessedTime = 0;
   const throttleInterval = 1000;
 
+  const subscribeQueue: string[] = [];
+  let processingQueue = false;
+
+  const processQueue = () => {
+    if (processingQueue || subscribeQueue.length === 0) {
+      return;
+    }
+    processingQueue = true;
+
+    const symbol = subscribeQueue.shift();
+    if (symbol && isOpen) {
+      socket.send(JSON.stringify({type: 'subscribe', symbol}));
+    }
+
+    setTimeout(() => {
+      processingQueue = false;
+      processQueue();
+    }, throttleInterval);
+  };
+
   socket.onopen = () => {
-    console.log('WebSocket connection opened.');
     isOpen = true;
     symbols.forEach(symbol => {
-      try {
-        if (isOpen) {
-          socket.send(JSON.stringify({type: 'subscribe', symbol}));
-          console.log(`Subscribed to ${symbol}`);
-        }
-      } catch (error) {
-        console.error(`Error subscribing to ${symbol}:`, error);
-      }
+      subscribeQueue.push(symbol);
     });
+    processQueue();
   };
 
   socket.onmessage = event => {
@@ -35,7 +48,6 @@ const createSocket = (
     if (currentTime - lastProcessedTime >= throttleInterval) {
       lastProcessedTime = currentTime;
       const message = JSON.parse(event.data);
-      console.log('Received message:', message);
       if (message.type === 'trade') {
         onMessage(message.data);
       }
@@ -46,8 +58,7 @@ const createSocket = (
     console.error('WebSocket error:', error);
   };
 
-  socket.onclose = event => {
-    console.log('WebSocket connection closed:', event);
+  socket.onclose = () => {
     isOpen = false;
   };
 
@@ -56,7 +67,6 @@ const createSocket = (
       symbols.forEach(symbol => {
         try {
           socket.send(JSON.stringify({type: 'unsubscribe', symbol}));
-          console.log(`Unsubscribed from ${symbol}`);
         } catch (error) {
           console.error(`Error unsubscribing from ${symbol}:`, error);
         }

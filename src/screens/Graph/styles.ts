@@ -13,4 +13,7 @@ export const styles = StyleSheet.create({
     color: colors.white,
     fontSize: 40,
   },
+  lineChart: {
+    borderRadius: 16,
+  },
 });

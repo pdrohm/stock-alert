@@ -8,7 +8,8 @@ import _ from 'lodash';
 import {URL_API_TOKEN} from '@env';
 
 const WatchlistScreen: React.FC = () => {
-  const {watchedStocks, loadMoreStocks, updateStockPrice} = useStockContext();
+  const {watchedStocks, loadMoreStocks, updateStockPrice, removeWatchedStock} =
+    useStockContext();
 
   const openSocketConnection = () => {
     const symbols = watchedStocks.map(stock => stock.symbol);
@@ -34,7 +35,9 @@ const WatchlistScreen: React.FC = () => {
     return () => closeSocket();
   });
 
-  const renderItem = ({item}: {item: any}) => <StockCard stock={item} />;
+  const renderItem = ({item}: {item: any}) => (
+    <StockCard stock={item} onRemove={removeWatchedStock} />
+  );
 
   return (
     <SafeAreaView style={styles.container}>

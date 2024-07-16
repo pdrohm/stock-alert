@@ -1,14 +1,15 @@
 import React from 'react';
-import {View, Text} from 'react-native';
-
+import {View, Text, TouchableOpacity} from 'react-native';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {styles} from './styles';
 import {Stock} from '../../types/StockTypes';
 
 interface StockCardProps {
   stock: Stock & {description: string; displaySymbol: string};
+  onRemove: (symbol: string) => void;
 }
 
-const StockCard = ({stock}: StockCardProps) => {
+const StockCard = ({stock, onRemove}: StockCardProps) => {
   const price = stock.c != null ? stock.c.toFixed(2) : '--';
   const changePercentage = stock.dp != null ? stock.dp.toFixed(2) : '--';
   const changeValue = stock.d != null ? stock.d.toFixed(2) : '--';
@@ -29,6 +30,11 @@ const StockCard = ({stock}: StockCardProps) => {
           {isPositive ? '▲' : '▼'} {changePercentage}% ({changeValue})
         </Text>
       </View>
+      <TouchableOpacity
+        style={styles.removeButton}
+        onPress={() => onRemove(stock.symbol)}>
+        <FontAwesome name="trash" size={20} color="#fff" />
+      </TouchableOpacity>
     </View>
   );
 };

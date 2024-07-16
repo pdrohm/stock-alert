@@ -11,8 +11,7 @@ import StockService from '../../services/StockService';
 import ProfileBanner from '../../components/ProfileBanner/ProfileBanner';
 
 const AddAlertScreen = () => {
-  const {stocks, addWatchedStock, setStocks, loadMoreStocks} =
-    useStockContext();
+  const {stocks, addWatchedStock, setStocks} = useStockContext();
   const {addAlert, alerts} = useAlertContext();
   const [selectedStocks, setSelectedStocks] = useState<string[]>([]);
   const [priceAlert, setPriceAlert] = useState<string>('');
@@ -42,6 +41,7 @@ const AddAlertScreen = () => {
       }));
       setStocks(results);
       setStockOptions(formattedResults);
+      setOpen(true);
     }
   };
 
@@ -85,6 +85,7 @@ const AddAlertScreen = () => {
         value: stock.symbol,
       })),
     );
+    setOpen(false);
   };
 
   return (
@@ -112,11 +113,9 @@ const AddAlertScreen = () => {
         selectedItemLabelStyle={styles.selectedItemLabel}
         badgeStyle={styles.badge}
         badgeTextStyle={styles.badgeTextStyle}
-        listMode="FLATLIST"
-        flatListProps={{
-          initialNumToRender: 10,
-          onEndReached: loadMoreStocks,
-          onEndReachedThreshold: 0.5,
+        listMode="SCROLLVIEW"
+        scrollViewProps={{
+          nestedScrollEnabled: true,
         }}
         showBadgeDot={true}
         mode="BADGE"

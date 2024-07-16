@@ -40,9 +40,7 @@ const GraphScreen = () => {
             },
           }}
           bezier
-          style={{
-            borderRadius: 16,
-          }}
+          style={styles.lineChart}
         />
       )}
     </SafeAreaView>
