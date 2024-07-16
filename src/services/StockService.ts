@@ -17,21 +17,27 @@ const getStockData = async (symbol: string): Promise<Stock> => {
   }
 };
 
-const getStocks = async (page: number): Promise<StockSymbol[]> => {
+const getStocks = async (
+  page: number,
+  limit: number = 20,
+): Promise<StockSymbol[]> => {
   try {
     const response = await api.get('/stock/symbol', {
       params: {
         exchange: exchange,
-        limit: 20,
-        offset: (page - 1) * 20,
         token: API_TOKEN,
       },
     });
-    const stockList = response.data.map((stock: any) => ({
-      displaySymbol: stock.displaySymbol,
-      description: stock.description,
-      symbol: stock.symbol,
-    }));
+
+    // Filtrar apenas os campos necessários e limitar a quantidade de dados
+    const stockList = response.data
+      .slice((page - 1) * limit, page * limit)
+      .map((stock: any) => ({
+        displaySymbol: stock.displaySymbol,
+        description: stock.description,
+        symbol: stock.symbol,
+      }));
+
     return stockList;
   } catch (error) {
     console.error('Error fetching stocks:', error);

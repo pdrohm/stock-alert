@@ -31,14 +31,17 @@ export const StockProvider: React.FC<StockProviderProps> = ({children}) => {
   const [watchedStocks, setWatchedStocks] = useState<Stock[]>([]);
   const [page, setPage] = useState(1);
 
+  console.log('stocks', stocks);
+
   useEffect(() => {
     fetchStocks();
-  });
+  }, []);
 
   const fetchStocks = useCallback(async () => {
+    console.log('fetchStocks');
     try {
       const stockList = await StockService.getStocks(page);
-      setStocksState(prevStocks => [...prevStocks, ...stockList]);
+      setStocksState(stockList);
     } catch (error) {
       console.error('Error fetching stocks:', error);
     }

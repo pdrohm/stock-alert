@@ -5,19 +5,23 @@ type TradeData = {
 
 type MessageHandler = (data: TradeData[]) => void;
 
-const createSocket = (token: string, symbols: string[], onMessage: MessageHandler) => {
+const createSocket = (
+  token: string,
+  symbols: string[],
+  onMessage: MessageHandler,
+) => {
   const socket = new WebSocket(`wss://ws.finnhub.io?token=${token}`);
   let isOpen = false;
   let lastProcessedTime = 0;
   const throttleInterval = 1000; // 1 second
 
   socket.onopen = () => {
-    console.log("WebSocket connection opened.");
+    console.log('WebSocket connection opened.');
     isOpen = true;
     symbols.forEach(symbol => {
       try {
         if (isOpen) {
-          socket.send(JSON.stringify({ type: 'subscribe', symbol }));
+          socket.send(JSON.stringify({type: 'subscribe', symbol}));
           console.log(`Subscribed to ${symbol}`);
         }
       } catch (error) {
@@ -26,7 +30,7 @@ const createSocket = (token: string, symbols: string[], onMessage: MessageHandle
     });
   };
 
-  socket.onmessage = (event) => {
+  socket.onmessage = event => {
     const currentTime = Date.now();
     if (currentTime - lastProcessedTime >= throttleInterval) {
       lastProcessedTime = currentTime;
@@ -38,12 +42,12 @@ const createSocket = (token: string, symbols: string[], onMessage: MessageHandle
     }
   };
 
-  socket.onerror = (error) => {
-    console.error("WebSocket error:", error);
+  socket.onerror = error => {
+    console.error('WebSocket error:', error);
   };
 
-  socket.onclose = (event) => {
-    console.log("WebSocket connection closed:", event);
+  socket.onclose = event => {
+    console.log('WebSocket connection closed:', event);
     isOpen = false;
   };
 
@@ -51,7 +55,7 @@ const createSocket = (token: string, symbols: string[], onMessage: MessageHandle
     if (isOpen) {
       symbols.forEach(symbol => {
         try {
-          socket.send(JSON.stringify({ type: 'unsubscribe', symbol }));
+          socket.send(JSON.stringify({type: 'unsubscribe', symbol}));
           console.log(`Unsubscribed from ${symbol}`);
         } catch (error) {
           console.error(`Error unsubscribing from ${symbol}:`, error);
@@ -61,7 +65,7 @@ const createSocket = (token: string, symbols: string[], onMessage: MessageHandle
     }
   };
 
-  return { closeSocket };
+  return {closeSocket};
 };
 
 export default createSocket;
