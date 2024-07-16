@@ -39,7 +39,7 @@ export const styles = StyleSheet.create({
   },
   logoutIcon: {
     marginLeft: 8,
-    backgroundColor: '#fff',
+    backgroundColor: colors.white,
     borderRadius: 12,
     padding: 4,
   },

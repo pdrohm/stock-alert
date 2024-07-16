@@ -7,7 +7,7 @@ import React, {
   useEffect,
 } from 'react';
 import {useAuth0} from 'react-native-auth0';
-import {URL_AUTH0_REDIRECT_URI} from '@env';
+import {URL_AUTH0_LOGOUT_REDIRECT_URI, URL_AUTH0_REDIRECT_URI} from '@env';
 import {User} from '../types/UserTypes';
 
 interface AuthContextData {
@@ -46,9 +46,7 @@ export const AuthProvider: React.FC<{children: ReactNode}> = ({children}) => {
 
   const logout = async () => {
     try {
-      await clearSession({
-        federated: true,
-      });
+      await clearSession({returnToUrl: URL_AUTH0_LOGOUT_REDIRECT_URI});
     } catch (error) {
       console.error('Logout failed:', error);
     }

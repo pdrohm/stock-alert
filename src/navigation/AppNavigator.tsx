@@ -1,7 +1,6 @@
 // src/navigation/AppNavigator.tsx
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {NavigationContainer} from '@react-navigation/native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -35,52 +34,50 @@ const navigatorOptions = {
 
 const AppNavigator: React.FC = () => {
   return (
-    <NavigationContainer>
-      <Tab.Navigator screenOptions={navigatorOptions}>
-        <Tab.Screen
-          name="Add Alert"
-          component={AddAlertScreen}
-          options={{
-            headerShown: true,
-            headerStyle: {backgroundColor: colors.primary},
-            headerTintColor: colors.white,
-            headerTitleStyle: {fontWeight: 'bold'},
-            headerTitle: 'Add Alert',
-            tabBarIcon: ({color, size}) => (
-              <AddAlertIcon color={color} size={size} />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="Watchlist"
-          component={WatchlistScreen}
-          options={{
-            headerShown: true,
-            headerStyle: {backgroundColor: colors.primary},
-            headerTintColor: colors.white,
-            headerTitleStyle: {fontWeight: 'bold'},
-            headerTitle: 'Watchlist',
-            tabBarIcon: ({color, size}) => (
-              <WatchlistIcon color={color} size={size} />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="Stock Graphs"
-          component={GraphScreen}
-          options={{
-            headerShown: true,
-            headerStyle: {backgroundColor: colors.primary},
-            headerTintColor: colors.white,
-            headerTitleStyle: {fontWeight: 'bold'},
-            headerTitle: 'Stock Graphs',
-            tabBarIcon: ({color, size}) => (
-              <GraphIcon color={color} size={size} />
-            ),
-          }}
-        />
-      </Tab.Navigator>
-    </NavigationContainer>
+    <Tab.Navigator screenOptions={navigatorOptions}>
+      <Tab.Screen
+        name="Add Alert"
+        component={AddAlertScreen}
+        options={{
+          headerShown: true,
+          headerStyle: {backgroundColor: colors.primary},
+          headerTintColor: colors.white,
+          headerTitleStyle: {fontWeight: 'bold'},
+          headerTitle: 'Add Alert',
+          tabBarIcon: ({color, size}) => (
+            <AddAlertIcon color={color} size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Watchlist"
+        component={WatchlistScreen}
+        options={{
+          headerShown: true,
+          headerStyle: {backgroundColor: colors.primary},
+          headerTintColor: colors.white,
+          headerTitleStyle: {fontWeight: 'bold'},
+          headerTitle: 'Watchlist',
+          tabBarIcon: ({color, size}) => (
+            <WatchlistIcon color={color} size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Stock Graphs"
+        component={GraphScreen}
+        options={{
+          headerShown: true,
+          headerStyle: {backgroundColor: colors.primary},
+          headerTintColor: colors.white,
+          headerTitleStyle: {fontWeight: 'bold'},
+          headerTitle: 'Stock Graphs',
+          tabBarIcon: ({color, size}) => (
+            <GraphIcon color={color} size={size} />
+          ),
+        }}
+      />
+    </Tab.Navigator>
   );
 };
 
