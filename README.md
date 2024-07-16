@@ -24,7 +24,7 @@ Before running the application, ensure you have the following installed:
 1. Clone the repository:
 
     ```bash
-    git clone https://github.com/yourusername/stock-alert-app.git
+    git clone https://github.com/pdrohm/stock-alert.git
     cd stock-alert-app
     ```
 
