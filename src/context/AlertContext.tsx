@@ -11,11 +11,14 @@ import StockService from '../services/StockService';
 interface Alert {
   symbol: string;
   price: number;
+  lastNotificationTime?: number; // Store last notification time for each alert
+  notified?: boolean; // Flag to track if already notified
 }
 
 interface AlertContextProps {
   alerts: Alert[];
   addAlert: (symbol: string, price: number) => void;
+  removeAlert: (symbol: string) => void;
 }
 
 const AlertContext = createContext<AlertContextProps | undefined>(undefined);
@@ -24,29 +27,64 @@ export const AlertProvider = ({children}: {children: ReactNode}) => {
   const [alerts, setAlerts] = useState<Alert[]>([]);
 
   const addAlert = (symbol: string, price: number) => {
-    setAlerts([...alerts, {symbol, price}]);
+    setAlerts(prevAlerts => [...prevAlerts, {symbol, price}]);
+  };
+
+  const removeAlert = (symbol: string) => {
+    setAlerts(prevAlerts =>
+      prevAlerts.filter(alert => alert.symbol !== symbol),
+    );
+  };
+
+  const checkAlerts = async () => {
+    const updatedAlerts = await Promise.all(
+      alerts.map(async alert => {
+        try {
+          const stockPrice = await StockService.getStockPrice(alert.symbol);
+
+          if (stockPrice > alert.price) {
+            if (
+              !alert.lastNotificationTime ||
+              Date.now() - alert.lastNotificationTime > 3600000
+            ) {
+              showNotification(
+                'Price Alert',
+                `The price of ${alert.symbol} has exceeded ${alert.price}`,
+              );
+
+              return {
+                ...alert,
+                notified: true,
+                lastNotificationTime: Date.now(),
+              };
+            }
+          }
+
+          return {
+            ...alert,
+            notified: false,
+          };
+        } catch (error) {
+          console.error(
+            `Error fetching stock price for ${alert.symbol}:`,
+            error,
+          );
+          return alert; // Return original alert on error
+        }
+      }),
+    );
+
+    setAlerts(updatedAlerts);
   };
 
   useEffect(() => {
-    const checkPrices = async () => {
-      for (const alert of alerts) {
-        const stockPrice = await StockService.getStockPrice(alert.symbol);
-        if (stockPrice > alert.price) {
-          showNotification(
-            'Price Alert',
-            `The price of ${alert.symbol} has exceeded ${alert.price}`,
-          );
-        }
-      }
-    };
-
-    const interval = setInterval(checkPrices, 60000);
+    const interval = setInterval(checkAlerts, 60000);
 
     return () => clearInterval(interval);
-  }, [alerts]);
+  });
 
   return (
-    <AlertContext.Provider value={{alerts, addAlert}}>
+    <AlertContext.Provider value={{alerts, addAlert, removeAlert}}>
       {children}
     </AlertContext.Provider>
   );
