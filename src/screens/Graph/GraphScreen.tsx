@@ -1,10 +1,17 @@
 import React from 'react';
-import {Dimensions, Text, SafeAreaView, Button} from 'react-native';
+import {
+  Dimensions,
+  Text,
+  SafeAreaView,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {LineChart} from 'react-native-chart-kit';
 import {useStockContext} from '../../context/StockContext';
 import {styles} from './styles';
 import {colors} from '../../styles/colors';
 import {showNotification} from '../../config/PushNotificationConfig';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const GraphScreen = () => {
   const {watchedStocks} = useStockContext();
@@ -48,9 +55,16 @@ const GraphScreen = () => {
             bezier
             style={styles.lineChart}
           />
-          <Button title="Show Notification" onPress={handleButtonPress} />
         </>
       )}
+      <View style={styles.fixedBottomRight}>
+        <TouchableOpacity
+          onPress={handleButtonPress}
+          style={styles.notificationButton}>
+          <Text style={styles.notificationText}>Test Notification</Text>
+          <Icon name="notifications" size={20} color={colors.white} />
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
 };

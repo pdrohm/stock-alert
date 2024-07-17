@@ -7,16 +7,17 @@ import React, {
 } from 'react';
 import {showNotification} from '../config/PushNotificationConfig';
 import StockService from '../services/StockService';
+import {Alert} from 'react-native';
 
-interface Alert {
+interface AlertType {
   symbol: string;
   price: number;
-  lastNotificationTime?: number; // Store last notification time for each alert
-  notified?: boolean; // Flag to track if already notified
+  lastNotificationTime?: number;
+  notified?: boolean;
 }
 
 interface AlertContextProps {
-  alerts: Alert[];
+  alerts: AlertType[];
   addAlert: (symbol: string, price: number) => void;
   removeAlert: (symbol: string) => void;
 }
@@ -24,10 +25,11 @@ interface AlertContextProps {
 const AlertContext = createContext<AlertContextProps | undefined>(undefined);
 
 export const AlertProvider = ({children}: {children: ReactNode}) => {
-  const [alerts, setAlerts] = useState<Alert[]>([]);
+  const [alerts, setAlerts] = useState<AlertType[]>([]);
 
   const addAlert = (symbol: string, price: number) => {
     setAlerts(prevAlerts => [...prevAlerts, {symbol, price}]);
+    Alert.alert('Success', 'Alerts added successfully');
   };
 
   const removeAlert = (symbol: string) => {
@@ -69,7 +71,7 @@ export const AlertProvider = ({children}: {children: ReactNode}) => {
             `Error fetching stock price for ${alert.symbol}:`,
             error,
           );
-          return alert; // Return original alert on error
+          return alert;
         }
       }),
     );

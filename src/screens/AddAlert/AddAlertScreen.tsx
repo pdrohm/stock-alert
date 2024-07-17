@@ -70,13 +70,10 @@ const AddAlertScreen = () => {
         return;
       }
 
-      addAlert(symbol, price);
       addWatchedStock(symbol);
+      addAlert(symbol, price);
     });
 
-    Alert.alert('Success', 'Alerts added successfully');
-
-    // Reset inputs
     setSelectedStocks([]);
     setPriceAlert('');
     setStockOptions(

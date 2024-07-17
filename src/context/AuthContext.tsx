@@ -76,7 +76,8 @@ export const AuthProvider: React.FC<{children: ReactNode}> = ({children}) => {
       givenName: 'Dummy',
       name: 'Dummy User',
       nickname: 'dummyuser',
-      picture: 'https://dummyimage.com/100x100/000/fff',
+      picture:
+        'https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png',
       sub: 'dummy|1234567890',
       updatedAt: new Date().toISOString(),
     };

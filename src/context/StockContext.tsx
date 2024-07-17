@@ -32,8 +32,8 @@ export const StockProvider: React.FC<StockProviderProps> = ({children}) => {
   const [page, setPage] = useState(1);
 
   useEffect(() => {
-    fetchStocks();
-  });
+    fetchStocks(); // eslint-disable-next-line
+  }, []);
 
   const fetchStocks = useCallback(async () => {
     try {
@@ -47,8 +47,12 @@ export const StockProvider: React.FC<StockProviderProps> = ({children}) => {
   const addWatchedStock = useCallback(
     async (symbol: string) => {
       try {
+        console.log('passou aqui', symbol);
         const stockData = await StockService.getStockData(symbol);
         const stockInfo = stocks.find(stock => stock.symbol === symbol);
+        console.log('stocks', stocks);
+        console.log('stockData', stockData);
+        console.log('stockInfo', stockInfo);
         if (stockInfo) {
           setWatchedStocks(prevWatchedStocks => [
             ...prevWatchedStocks,

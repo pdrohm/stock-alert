@@ -16,4 +16,20 @@ export const styles = StyleSheet.create({
   lineChart: {
     borderRadius: 16,
   },
+  fixedBottomRight: {
+    position: 'absolute',
+    bottom: 20,
+    right: 20,
+  },
+  notificationButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: colors.primary,
+    padding: 10,
+    borderRadius: 5,
+  },
+  notificationText: {
+    color: colors.white,
+    marginRight: 5,
+  },
 });
