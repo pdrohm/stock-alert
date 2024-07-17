@@ -33,7 +33,7 @@ export const StockProvider: React.FC<StockProviderProps> = ({children}) => {
 
   useEffect(() => {
     fetchStocks();
-  }, []);
+  });
 
   const fetchStocks = useCallback(async () => {
     try {

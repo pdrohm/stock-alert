@@ -44,7 +44,7 @@ const WatchlistScreen: React.FC = () => {
 
   useEffect(() => {
     const closeSocket = openSocketConnection();
-    return () => closeSocket();
+    return () => closeSocket(); // eslint-disable-next-line
   }, [watchedStocks]);
 
   return (
