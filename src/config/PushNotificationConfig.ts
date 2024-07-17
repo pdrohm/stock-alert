@@ -11,8 +11,22 @@ PushNotification.configure({
   },
   requestPermissions: Platform.OS === 'ios',
 });
+
+PushNotification.createChannel(
+  {
+    channelId: 'default-channel-id',
+    channelName: 'Default Channel',
+    channelDescription: 'A default channel',
+    soundName: 'default',
+    importance: 4,
+    vibrate: true,
+  },
+  created => console.log(`createChannel returned '${created}'`),
+);
+
 export const showNotification = (title: string, message: string) => {
   PushNotification.localNotification({
+    channelId: 'default-channel-id',
     title: title,
     message: message,
   });

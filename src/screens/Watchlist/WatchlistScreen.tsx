@@ -1,15 +1,18 @@
 import React, {useEffect} from 'react';
 import {FlatList, SafeAreaView} from 'react-native';
 import {useStockContext} from '../../context/StockContext';
+import {useAlertContext} from '../../context/AlertContext';
 import StockCard from '../../components/StockCard/StockCard';
 import {styles} from './styles';
 import createSocket from '../../services/socket';
 import _ from 'lodash';
 import {URL_API_TOKEN} from '@env';
+import {showNotification} from '../../config/PushNotificationConfig';
 
 const WatchlistScreen: React.FC = () => {
   const {watchedStocks, loadMoreStocks, updateStockPrice, removeWatchedStock} =
     useStockContext();
+  const {alerts} = useAlertContext();
 
   const openSocketConnection = () => {
     const symbols = watchedStocks.map(stock => stock.symbol);
@@ -33,7 +36,19 @@ const WatchlistScreen: React.FC = () => {
   useEffect(() => {
     const closeSocket = openSocketConnection();
     return () => closeSocket();
-  });
+  }, [watchedStocks]);
+
+  useEffect(() => {
+    watchedStocks.forEach(stock => {
+      const alert = alerts.find(alert => alert.symbol === stock.symbol);
+      if (alert && stock.c >= alert.price) {
+        showNotification(
+          'Price Alert',
+          `The price of ${stock.symbol} has exceeded ${alert.price}`,
+        );
+      }
+    });
+  }, [watchedStocks, alerts]);
 
   const renderItem = ({item}: {item: any}) => (
     <StockCard stock={item} onRemove={removeWatchedStock} />
