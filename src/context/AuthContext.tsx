@@ -40,8 +40,13 @@ export const AuthProvider: React.FC<{children: ReactNode}> = ({children}) => {
   const [user, setUser] = useState<User | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
+  console.log(auth0User);
+
   useEffect(() => {
-    if (auth0User || user) {
+    if (auth0User) {
+      setUser(auth0User);
+      setIsAuthenticated(true);
+    } else if (user) {
       setIsAuthenticated(true);
     } else {
       setIsAuthenticated(false);

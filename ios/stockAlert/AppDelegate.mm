@@ -4,6 +4,9 @@
 #import <UserNotifications/UserNotifications.h>
 #import <RNCPushNotificationIOS.h>
 
+@interface AppDelegate () <UNUserNotificationCenterDelegate>
+@end
+
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -11,7 +14,6 @@
   self.moduleName = @"stockAlert";
   self.initialProps = @{};
 
-  // Add this to handle notifications
   UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
   center.delegate = self;
 
@@ -32,7 +34,6 @@
 #endif
 }
 
-// Handle URL opens
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options
 {
   return [RCTLinkingManager application:app openURL:url options:options];
@@ -43,29 +44,25 @@
   return [RCTLinkingManager application:application openURL:url sourceApplication:sourceApplication annotation:annotation];
 }
 
-// Required for the register event.
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
   [RNCPushNotificationIOS didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
 }
 
-// Required for the notification event. You must call the completion handler after handling the remote notification.
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
   [RNCPushNotificationIOS didReceiveRemoteNotification:userInfo fetchCompletionHandler:completionHandler];
 }
 
-// Required for the registrationError event.
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
 {
   [RNCPushNotificationIOS didFailToRegisterForRemoteNotificationsWithError:error];
 }
 
-// Required for the localNotification event.
 - (void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions))completionHandler
 {
-  [RNCPushNotificationIOS didReceiveLocalNotification:notification];
-  completionHandler(UNNotificationPresentationOptionAlert); // Show notification when app is in foreground
+  [RNCPushNotificationIOS didReceiveRemoteNotification:notification.request.content.userInfo];
+  completionHandler(UNNotificationPresentationOptionAlert);
 }
 
 @end
