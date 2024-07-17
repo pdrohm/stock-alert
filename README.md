@@ -13,11 +13,11 @@ The Stock Alert App is a React Native application designed to help users monitor
 
 Before running the application, ensure you have the following installed:
 
-- [Node.js](https://nodejs.org/)
+- [Node.js](https://nodejs.org/) >= v18
 - [npm](https://www.npmjs.com/)
 - [React Native CLI](https://reactnative.dev/docs/environment-setup)
 - [Xcode](https://developer.apple.com/xcode/) (for iOS development)
-- [Android Studio](https://developer.android.com/studio) (for Android development)
+- [Android Studio](https://developer.android.com/studio) (for Android development)( JAVA VERSION >= 17)
 
 ## Installation
 
@@ -66,11 +66,14 @@ Before running the application, ensure you have the following installed:
 
 1. Start the Android emulator from Android Studio or connect an Android device.
 
-2. Run the application:
+2. Install the application:
 
     ```bash
-    npx react-native run-android
+    npm run start
     ```
+and hit the (a) option
+
+
 
 ## Usage
 
@@ -79,6 +82,13 @@ Before running the application, ensure you have the following installed:
 3. **Set Alerts**: Set price alerts for the stocks in your watchlist.
 4. **Receive Notifications**: Get notified when the stock price crosses your set threshold.
 5. **Logout**: Use the logout button to end your session.
+
+## P.S
+
+### Auth0
+
+The Auth0 login functionality is currently not working as expected on Android. To save time, a dummy login has been implemented for Android users while working on a custom Auth0 login page. This is a temporary measure during the evaluation phase for a job application. For iOS users, the Auth0 login button should work as intended. Thank you for your understanding.
+
 
 ## License
 
