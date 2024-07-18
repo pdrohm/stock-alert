@@ -82,8 +82,8 @@ export const AlertProvider = ({children}: {children: ReactNode}) => {
   useEffect(() => {
     const interval = setInterval(checkAlerts, 60000);
 
-    return () => clearInterval(interval);
-  });
+    return () => clearInterval(interval); // eslint-disable-next-line
+  }, []);
 
   return (
     <AlertContext.Provider value={{alerts, addAlert, removeAlert}}>
